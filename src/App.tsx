@@ -1,13 +1,15 @@
-import './App.css'
-function App() {
-    // Тут в будущем будет наш реестр (useState) и задачи (useEffect)
-    return (
-        <>
-            <div>
 
-            </div>
-        </>
+import './App.css'
+import Matrix from './components/Matrix'
+
+function App() {
+
+
+    return (
+        <Matrix>
+        </Matrix>
     )
+
 }
 
 export default App
