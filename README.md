@@ -12,6 +12,7 @@ randomly and evolves at a fixed tick interval.
 - TypeScript
 - Vite
 
+
 **Getting Started**
 1. Install dependencies:
 
