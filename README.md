@@ -43,7 +43,7 @@ npm run preview
 
 **Project Structure**
 - `src/components/Matrix.tsx` renders the grid
-- `src/services/LifeGameServices.ts` computes the next matrix state
+- `src/services/LifeGameService.ts` computes the next matrix state
 - `src/utils/random.ts` provides random matrix helpers
 - `src/config/matrix-config.ts` contains the simulation config
 - `src/App.tsx` wires the UI

@@ -1,33 +1,26 @@
-import React from 'react'
-import LifeGameService from "../services/LifeGameService.ts";
-import {getRandomMatrix} from "../utils/random.ts";
-import matrixData from "../config/matrix-config.ts"
+import React, { ReactNode } from 'react'
+import LifeGameService from "../services/LifeGameService";
+import { getRandomIntMatrix } from "../utils/random";
+import matrixData from "../config/matrix-config";
 
 function Matrix() {
-    const {rows, columns, ticInterval} = matrixData;
-    const [matrix, setMatrix] = React.useState<number[][]>([]);
-
-    const lifeGame = React.useMemo(
-        () => new LifeGameService(getRandomMatrix(rows, columns, 0, 1)),
-        [rows, columns]
-    )
-
+    const {rows, columns, ticInterval} = matrixData
+    const [matrix, setMatrix] = React.useState<number[][]>([])
+    const lifeGame: LifeGameService = React.useMemo(() => getLifeGame(), [rows, columns])
+    function getLifeGame(): LifeGameService{
+        return new LifeGameService(getRandomIntMatrix(rows, columns, 0, 1))
+    }
     React.useEffect(() => {
         function tic() {
-            if (!lifeGame) return;
             setMatrix(lifeGame.nextMatrix())
         }
-        const interval = setInterval(tic, ticInterval)
-        return () => clearInterval(interval)
+        const intervalId = setInterval(tic, ticInterval)
+        return () => clearInterval(intervalId)
     }, [ticInterval, lifeGame])
-    function getCells(matrix: number[][]): React.ReactNode[] {
-        return matrix.map((rows, rInd) => {
-            return rows.map((cellValue, cInd) => (
-                <div
-                    key={`${rInd}-${cInd}`}
-                    className={`cell ${cellValue ? "cell-alive" : "cell-dead"}`}
-                ></div>
-            ))
+    function getCells(matrix: number[][]): ReactNode {
+        return matrix.map((row, rInd) => {
+            return row.map((cellValue, cInd) => <div key={`${rInd}-${cInd}`}
+                                                     className={`cell ${cellValue ? "cell-alive" : "cell-dead"}`}></div>)
         })
     }
     return (
@@ -39,11 +32,8 @@ function Matrix() {
             height: '80vh'
         }}>
             {getCells(matrix)}
-
         </div>
     )
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const lifeGame = new LifeGameService(getRandomMatrix(10, 10, 0, 0 ))
 export default Matrix
